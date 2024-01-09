@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Programa de Menú</title>
+</head>
+<body>
+
+<div id="menu">
+  <h2>MENÚ</h2>
+  <button onclick="manejarOpcion('1')">1. FACTORIAL</button>
+  <hr>
+  <button onclick="manejarOpcion('2')">2. PRIMO</button>
+  <hr>
+  <button onclick="manejarOpcion('3')">3. SERIE MATEMÁTICA</button>
+  <hr>
+  <button onclick="manejarOpcion('S')">S. SALIR</button>
+  <br>
+  <hr>
+</div>
+
+<div id="resultado">
+  <!-- Aquí se mostrarán los resultados -->
+</div>
+
+<script>
+  function calcularFactorial(num) {
+    if (num === 0 || num === 1) {
+      return 1;
+    } else {
+      return num * calcularFactorial(num - 1);
+    }
+  }
+
+  function esPrimo(num) {
+    if (num < 2) {
+      return false;
+    }
+    for (let i = 2; i <= Math.sqrt(num); i++) {
+      if (num % i === 0) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function calcularSerie(numTerminos) {
+    let resultado = 0;
+    for (let i = 1; i <= numTerminos; i++) {
+      let termino = Math.pow(i, 2) / calcularFactorial(i);
+      if (i % 2 === 0) {
+        resultado -= termino;
+      } else {
+        resultado += termino;
+      }
+    }
+    return resultado;
+  }
+
+  function mostrarResultado(mensaje) {
+    document.getElementById('resultado').innerHTML = mensaje;
+  }
+
+  function manejarOpcion(opcion) {
+    switch (opcion) {
+      case '1':
+        let numFactorial = parseInt(prompt("Ingrese un número para calcular su factorial (Entre el 0 y el 10): "));
+        if (numFactorial >= 0 && numFactorial <= 10) {
+          mostrarResultado(`El factorial de ${numFactorial} es: ${calcularFactorial(numFactorial)}`);
+        } else {
+          mostrarResultado("Número fuera del rango permitido.");
+        }
+        break;
+
+      case '2':
+        let numPrimo = parseInt(prompt("Ingrese un número para verificar si es primo: "));
+        mostrarResultado(`${numPrimo} ${esPrimo(numPrimo) ? "es" : "no es"} primo.`);
+        break;
+
+      case '3':
+        let numTerminos = parseInt(prompt("Ingrese la cantidad de términos para la serie matemática: "));
+        mostrarResultado(`El resultado de la serie es: ${calcularSerie(numTerminos)}`);
+        break;
+
+      case 'S':
+        mostrarResultado("Saliendo del programa. Hasta luego!");
+        setTimeout(function() {
+          window.location.href = "../index.html";
+        }, 1000);
+        break;
+    }
+  }
+</script>
+</body>
+</html>

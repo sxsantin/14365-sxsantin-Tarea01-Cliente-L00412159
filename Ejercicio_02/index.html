@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Programa con Menú</title>
+</head>
+<body>
+
+<div id="menu">
+  <h2>MENU</h2>
+  <button onclick="opcion1()">1. Fibonacci</button>
+  <hr>
+  <button onclick="opcion2()">2. Cubo</button>
+  <hr>
+  <button onclick="opcion3()">3. Fraccionarios</button>
+  <hr>
+  <button onclick="salir()">S. Salir</button>
+  <hr>
+</div>
+
+<div id="resultado">
+  <!-- Aquí se mostrarán los resultados -->
+</div>
+
+<script>
+  const MAX = 1000000;
+
+  function mostrarResultado(mensaje) {
+    document.getElementById('resultado').innerHTML = mensaje;
+  }
+
+  function validarNumeroEnteroPositivo(num) {
+    return !isNaN(num) && num % 1 === 0 && num > 0;
+  }
+
+  function calcularFibonacci(N) {
+    let fib = [1, 1];
+    for (let i = 2; i < N; i++) {
+      fib[i] = fib[i - 1] + fib[i - 2];
+    }
+    return fib;
+  }
+
+  function calcularCuboDigitos(num) {
+    const digitos = num.toString().split('').map(Number);
+    return digitos.reduce((sum, digit) => sum + Math.pow(digit, 3), 0);
+  }
+
+  function opcion1() {
+    let N = parseInt(prompt("Ingrese un número entero positivo (Entre 1 y 50): "));
+    if (validarNumeroEnteroPositivo(N) && N <= 50) {
+      mostrarResultado(`Los primeros ${N} números de Fibonacci son: ${calcularFibonacci(N).join(', ')}`);
+    } else {
+      mostrarResultado("Número fuera del rango permitido o inválido.");
+    }
+  }
+
+  function opcion2() {
+    let numerosCumplenCondicion = [];
+    for (let i = 1; i <= MAX; i++) {
+      if (i === calcularCuboDigitos(i)) {
+        numerosCumplenCondicion.push(i);
+      }
+    }
+    mostrarResultado(`Los números que cumplen con la condición son: ${numerosCumplenCondicion.join(', ')}`);
+  }
+
+  function opcion3() {
+    let A = parseInt(prompt("Ingrese el numerador A: "));
+    let B = parseInt(prompt("Ingrese el denominador A (debe ser positivo): "));
+    let C = parseInt(prompt("Ingrese el numerador B: "));
+    let D = parseInt(prompt("Ingrese el denominador B (debe ser positivo): "));
+
+    if (!isNaN(A) && !isNaN(B) && !isNaN(C) && !isNaN(D) &&
+        B > 0 && D > 0) {
+
+            let resultado = A + B * C - D;
+        mostrarResultado(`El resultado de la expresión A + B * C - D es: ${resultado}`);
+    } else {
+        mostrarResultado("Ingreso de datos no válido. Asegúrese de que los denominadores sean positivos.");
+    }
+}
+
+
+
+  
+
+  function salir() {
+    mostrarResultado("Saliendo del programa. Hasta luego!");
+    setTimeout(function() {
+          window.location.href = "../index.html";
+        }, 1000);
+  }
+</script>
+
+</body>
+</html>
